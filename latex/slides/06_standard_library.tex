@@ -1,9 +1,24 @@
 \input{slides_template}	% nothing to do here
 \input{c_introduction_info} % TODO modify this if you have not already done so
-
+\usepackage{tikz}
 % meta-information
 \newcommand{\topic}{
 	The C standard library
+}
+\newcommand{\tikzgraphic}[2]{
+\begin{tikzpicture}[scale=#1,font=#2]
+	\node (main) [rectangle,draw,inner sep=1em] at (0,0){main.c};
+	\node (libc) [rectangle,draw,inner sep=1em] at (5,-3){libc.so};
+	\node (stdio) [rectangle,draw,inner sep=1em] at (5,0){stdio.h};
+	\node (maino) [rectangle,draw,inner sep=1em] at (0,-3){main.o};
+	\node (aout) [rectangle,draw,inner sep=1em] at (2.5,-5){a.out};
+	\node at (aout) [above=1.5em] {linking};
+	\draw[->] (main) -- (maino) node [left,align=right,midway,text width=5em] {compiling, assembling};
+	\draw[->,dotted] (main) -- (stdio) node [above,midway] {includes};
+	\draw[->,dotted] (stdio) -- (libc) node [right,midway] {implementation};
+	\draw[->] (libc) -- (aout);
+	\draw[->] (maino) -- (aout);
+\end{tikzpicture}
 }
 
 % nothing to do here
@@ -20,25 +35,32 @@
 	\tableofcontents
 \end{frame}
 
-\section{Introduction}
+\section{Do not reinvent the wheel}
 \subsection{}
-\begin{frame}{Do not reinvent the wheel}
-	If you split your problem into sub-problems and solve each of them in a separate function, you are on a good way. \\ \ \\
-	However, many of the very basic sub-problems have already been solved ages ago. \\ \ \\
-	These solution are provided in \textit{libraries} such as the \textit{glibc} used by the \textit{gcc}. \\ \ \\
-	Library implementations are safer and more efficient than yours will ever be, \textit{plus} you save a lot of time using them.
-\end{frame}
-\begin{frame}[fragile]{The Hitchhikers Guide to the standard library}
-	The functions are \textit{declared} in a \textit{header file}. \\
-	Each header file has a certain name and the file extension \textit{.h}. \\ \ \\
-	The \textit{include} preprocessor statement puts them into your program, e.g.
+
+\begin{frame}[fragile]{The Hitchhiker's Guide to the standard library}
+	Many of the problems you will be working on have already been solved.\\
+	\bigskip
+	These solution are provided in \textit{libraries}. Prefer them over your own code!\\
+	\begin{itemize}
+		\item they are safer
+		\item they are more efficient
+		\item you do not have to do everything by yourself
+	\end{itemize}
+	\bigskip
+	We have already used the \textbf{C standard library} for i/o:
 \begin{lstlisting}[numbers=none]
-#include <stdio.h>	/* We have done that so many times */
-\end{lstlisting} \ \\ \ \\
-	The actual function implementation is linked dynamically to your program during runtime. Let us not care about that for now. \\ \ \\
-	With less than 30 header files, the C library is rather small. \\
-	We will go through the ones that might be the most useful to you.
+#include <stdio.h>	/* Anyone remember this? */
+\end{lstlisting}
+	This statement includes the \textit{header} file \textbf{stdio.h}.\\
+	After compilation, \textit{gcc} will link your program with the C library.\\
 \end{frame}
+
+\begin{frame}{Linking happens}
+	\centering
+	\tikzgraphic{.9}{\footnotesize}
+\end{frame}
+
 \section{Useful headers}
 \subsection{}
 \begin{frame}[fragile]{assert.h}
@@ -145,12 +167,6 @@ $ man -k printf
 $ man man
 \end{lstlisting}
 \end{frame}
-\section{Exercise}
-\subsection{}
-\begin{frame}{Exercises}
-	\begin{itemize}
-		\item You are now able to solve tasks 12, 13 and 14.
-	\end{itemize}
-\end{frame}
+
 % nothing to do from here on
 \end{document}

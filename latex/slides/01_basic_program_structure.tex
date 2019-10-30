@@ -4,12 +4,15 @@
 % meta-information
 \usepackage{tikz}
 \usepackage{hyperref}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	urlcolor=blue,
+}
 
 \newcommand{\topic}{
     Basic program structure
 }
-
-\definecolor{orange}{RGB}{255,127,0}
 
 % nothing to do here
 \title{\topic}
@@ -27,73 +30,94 @@
 
 \section{Setup}
 \subsection{}
-\begin{frame}{OS's you may use}
-	\begin{columns}[T]
-		\column{.3\textwidth}
-		\centering
-		\only<1>{\includegraphics[scale=.15]{../img/Linux.JPG}\\}
-		\only<2->{\includegraphics[scale=.15]{../img/ArchLinux.JPG}\\}
-		Linux\\
-		\uncover<2->{\textcolor{green}{recommended}}
-		\column{.3\textwidth}
-		\centering
-		\only<1-2>{\includegraphics[scale=.15]{../img/Windows.JPG}\\}
-		\only<3->{\includegraphics[scale=.15]{../img/Windows8.JPG}\\}
-		Windows\\
-		\uncover<3->{\textcolor{orange}{supported}}
-		\column{.3\textwidth}
-		\centering
-		\only<1-3>{\includegraphics[scale=.15]{../img/iOS.JPG}\\}
-		\only<4->{\includegraphics[scale=.15]{../img/iOSX.JPG}\\}
-		Mac OS\\
-		\uncover<4->{\textcolor{orange}{supported}}
-	\end{columns}
+
+\begin{frame}{Getting started}
+	The slides are at \href{https://fsr.github.io/c-lessons/materials.html}{fsr.github.io/c-lessons/materials.html}\\
+	\bigskip
+	There will be tasks! You can find them at \href{http://fsr.github.io/c-lessons/}{fsr.github.io/c-lessons}\\
+	\bigskip
+	If you have questions, use the auditorium group: \href{https://auditorium.inf.tu-dresden.de/de/groups/110804109}{https://auditorium.inf.tu-dresden.de/de/groups/110804109}\\
+	\bigskip
+	In case of big trouble, write an e-mail to your tutor.\\
 \end{frame}
-\begin{frame}[fragile]{Installing gcc on Linux}
-	Ubuntu / Debian: 
-	\begin{lstlisting}[numbers=none]
-$ sudo apt-get install gcc
-\end{lstlisting} \ \\ \ \\
-	Arch:
-	\begin{lstlisting}[numbers=none]
-$ sudo pacman -S gcc
-\end{lstlisting} \ \\ \ \\
-	... and you're done ;-)
-\end{frame}
-\begin{frame}{cygwin}
+
+\begin{frame}{Programs for programming}
+	For developing our own programs, we will use two kinds of software:\\
+	\bigskip
+	\textbf{Plain} text editors:
 	\begin{itemize}
-		\item Download installer from \url{https://cygwin.com/install.html}
-		\item Run it
-		\begin{itemize}
-			\item "Install from Internet"
-			\item Choose your installation path
-			\item Choose path for installation files
-			\item "Direct Connection"
-			\item Choose a mirror
-			\item Important software already is selected
-			\item \textbf{Optional}: powerful editor "vim" in \textit{Editors}
-			\item \textbf{Recommended}: "GDB" in \textit{Devel} and "libncurses-devel" in \textit{libs} for the advanced course
-			\item Watching loading bars...
-			\item ???
-			\item Profit!
-		\end{itemize}
-		\item Use cygwin-console like a linux terminal
-	\end{itemize}
-\end{frame}
-\begin{frame}{Mac OS}
-	If you want to use Mac OS in the course,
-	\begin{itemize}
-		\item Install \textit{gcc} with \textit{homebrew}, or
-		\item Use \textit{XCode}
+		\item vim (powerful, but needs getting used to)
+		\item gedit (easy to use, comes with Gnome)
+		\item Notepad(++) (for Windows users)
 	\end{itemize}
 	\bigskip
-	Your tutor might not be able to help you with Mac OS specific problems. 
+	Compilers:
+	\begin{itemize}
+		\item \textbf{gcc}
+		\item clang
+	\end{itemize}
 \end{frame}
+
+\begin{frame}[fragile]{gcc for Unix-based operating systems}
+	Ubuntu / Debian:
+	\begin{lstlisting}[numbers=none]
+$ sudo apt-get install gcc
+\end{lstlisting}
+	\bigskip
+	Arch Linux:
+	\begin{lstlisting}[numbers=none]
+$ sudo pacman -S gcc
+\end{lstlisting}
+	\bigskip
+	Mac OS X:
+	\begin{lstlisting}[numbers=none]
+$ brew install gcc
+\end{lstlisting}
+	\bigskip
+	... and you're done ;-)
+\end{frame}
+
+\begin{frame}{gcc for Windows 10 (using \textit{bash})}
+	For convenience you should use the new Ubuntu-based Linux subsystem.\\
+	\bigskip
+	\begin{itemize}
+		\item In \textit{Settings}, got to \textit{Update \& Security} $>$ \textit{For Developers}
+			and switch to \textit{Developer Mode}
+		\item In the \textit{Control panel}, go to \textit{Programs} $>$ \textit{Turn Windows Features On or Off}
+			and enable the \textit{Windows Subsystem for Linux (Beta)}
+		\item Reboot as you're prompted
+		\item Search for ``bash'' and run the \textit{bash} command
+		\item Follow the installation instructions
+	\end{itemize}
+	\bigskip
+	You may now continue as if you were using Ubuntu ;-)
+\end{frame}
+
+\begin{frame}[fragile]{gcc for older versions of Windows (using \textbf{cygwin})}
+	We highly recommend using the \href{https://chocolatey.org/}{Chocolatey} package manager.\\
+	\begin{itemize}
+		\item Follow the link and the instructions on the website to install it
+	\end{itemize}
+	\bigskip
+	Install cygwin (launch the shell as an administrator!):
+	\begin{lstlisting}[numbers=none]
+$ choco install cygwin
+$ choco install cyg-get
+\end{lstlisting}
+	\bigskip
+	Install gcc and optionally vim: {\scriptsize(\href{https://github.com/chocolatey/chocolatey-coreteampackages/issues/176#issuecomment-212939458}{How to fix the "Cannot find file" error})}
+	\begin{lstlisting}[numbers=none]
+$ cyg-get gcc-core vim
+\end{lstlisting}
+	\bigskip
+	Now start \textit{cygwin} to get a command line similar to Unix.
+\end{frame}
+
 \section{Hello World!}
 \subsection{}
 \begin{frame}[fragile]{The first program}
 	\begin{itemize}
-		\item Create a new file named \textbf{main.c}.
+		\item Create a new file named ``\textbf{main.c}''.
 		\item Open it in your text editor of choice.
 		\item Fill it as follows:
 	\end{itemize}
@@ -108,7 +132,7 @@ int main(void) {
 }
 \end{lstlisting}
 \end{frame}
-\begin{frame}[fragile]{From source to bits}
+\begin{frame}[fragile]{From source to binary}
 	\centering
 	Source code\\\ \\
 	$\Downarrow$\\\ \\
@@ -120,12 +144,12 @@ $ gcc main.c
 	$\Downarrow$\\\ \\
 	Executable program\\\ \\
 	\begin{columns}[T]
-		\column{.3\textwidth}
-		Linux (\textbf{a.out})
+		\column{.35\textwidth}
+		Linux/Mac OS X (\textbf{a.out})
 		\begin{lstlisting}[numbers=none]
 $ ./a.out
 \end{lstlisting}
-		\column{.3\textwidth}
+		\column{.35\textwidth}
 		Windows (\textbf{a.exe})
 		\begin{lstlisting}[numbers=none]
 $ ./a.exe
@@ -155,10 +179,10 @@ int main(void) {
 		\ \\\ \\$\left. \begin{array}{c}\\\\\\\\\\\\\end{array}\right\rbrace $ Main function
 	\end{columns}
 \end{frame}
-\begin{frame}[fragile]{Preprocessor statements}	
+\begin{frame}[fragile]{Preprocessor statements}
 	\begin{itemize}
 		\item Processed before compilation
-		\item Have their own language, start with a \textit{\#}
+		\item Have their own language; start with a \textit{\#}
 	\end{itemize}
 	\begin{lstlisting}
 #include <stdio.h>
@@ -167,13 +191,15 @@ int main(void) {
 		\item Includes the \textit{input/output header} from the \textbf{C standard library}
 		\item Needed to use \textit{printf()}
 	\end{itemize}\ \\ \ \\
-	Preprocessor statements hace way more use cases, but they are very different from the actual C programming language.\\
+	Preprocessor statements have way more use cases,\\
+	but they form their own language which is very different from actual C.\\
+	\bigskip
 	In this course, we will use them for inclusions only.
 \end{frame}
 \begin{frame}[fragile]{The main function}
 	\begin{itemize}
-		\item Basic function of every program
-		\item Exists \textbf{exactly once} per program
+		\item Core function of every program
+		\item Exists \textbf{exactly once} in every program
 		\item Called on program start
 	\end{itemize}
 	\StartLineAt{3}
@@ -198,7 +224,7 @@ int main(void) {
 }
 \end{lstlisting}
 	\begin{itemize}
-		\item Last statement, ends main function (and thus the whole program)
+		\item Last statement; ends main function (and thus the whole program)
 		\item \textit{0} tells the OS that everything went right
 		\item '$\rbrace$' marks the end of the main function scope
 	\end{itemize}
@@ -224,9 +250,10 @@ int main(void) {
 \end{frame}
 \begin{frame}[fragile]{Comments}
 	\begin{itemize}
-		\item Information for the programmer, cut out before compilation
+		\item Information for you and others who use your code
+		\item Cut out before compilation
 	\end{itemize}
-	Single line comments:
+	Single-line comments:
 	\StartLineAt{6}
 	\begin{lstlisting}
 	// Prints "Hello World!" on the command line
@@ -256,7 +283,7 @@ int main(void) {
 	\end{itemize}
 	\ \\
 	\begin{uncoverenv}<2->
-	\begin{lstlisting}[numbers=none]
+	\begin{lstlisting}
 #include <stdio.h>
 int
 main	(        void ){printf("Hello World!\n");
@@ -266,16 +293,17 @@ main	(        void ){printf("Hello World!\n");
 \end{lstlisting}
 	\end{uncoverenv}
 \end{frame}
-\begin{frame}[fragile]{Much more enjoyable}
+\begin{frame}[fragile]{Write enjoyable code}
 	\begin{itemize}
-		\item Put each statement on a single line
+		\item Put each statement onto its own line
 		\item Indent every statement in the main function by one \textit{tab}\\
-		 (you can also use \textit{spaces})
-		\item Use \textit{/* ... */} rather than \textit{// ...}
+		 or a fixed number of \textit{spaces}
+		\item Decide on a commenting style and stick to it\\
+		(\textit{/* .. */} recommended)
 		\item Leave blank lines between different parts of the program
-		\item Use \textit{spaces} consistently to get clear code:
+		\item Use \textit{spaces} and \textit{newlines} consistently
 	\end{itemize}
-	\begin{lstlisting}[numbers=none,showspaces=true,showtabs=true]
+	\begin{lstlisting}[showspaces=true,showtabs=true]
 int main(void) {
 	printf("Hello World!");
 	/* Prints "Hello World!" */
